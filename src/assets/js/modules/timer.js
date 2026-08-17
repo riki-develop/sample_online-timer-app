@@ -1,4 +1,5 @@
 import { createAlarmPlayer } from './audio.js';
+import { createMemoHistory } from './history.js';
 
 const DEFAULT_MINUTES = 10;
 const HOURGLASS = {
@@ -25,6 +26,7 @@ export const TimerApp = () => {
 
   const minutesSlider = root.querySelector('#timer-minutes');
   const minutesValue = root.querySelector('#timer-minutes-value');
+  const memoInput = root.querySelector('#timer-memo');
   const message = root.querySelector('[data-role="message"]');
   const setupPanel = root.querySelector('[data-role="setup-panel"]');
   const runningPanel = root.querySelector('[data-role="running-panel"]');
@@ -32,6 +34,7 @@ export const TimerApp = () => {
   const pauseButton = root.querySelector('[data-role="pause"]');
   const resetButton = root.querySelector('[data-role="reset"]');
   const soundToggleButton = root.querySelector('[data-role="sound-toggle"]');
+  const historyOpenButton = root.querySelector('[data-role="history-open"]');
   const remaining = root.querySelector('[data-role="remaining"]');
   const sandUpper = root.querySelector('[data-role="sand-upper"]');
   const sandLower = root.querySelector('[data-role="sand-lower"]');
@@ -41,6 +44,7 @@ export const TimerApp = () => {
   if (
     !minutesSlider ||
     !minutesValue ||
+    !memoInput ||
     !message ||
     !setupPanel ||
     !runningPanel ||
@@ -48,6 +52,7 @@ export const TimerApp = () => {
     !pauseButton ||
     !resetButton ||
     !soundToggleButton ||
+    !historyOpenButton ||
     !remaining ||
     !sandUpper ||
     !sandLower
@@ -56,6 +61,7 @@ export const TimerApp = () => {
   }
 
   const alarm = createAlarmPlayer();
+  const memoHistory = createMemoHistory(root);
 
   const state = {
     selectedMinutes: DEFAULT_MINUTES,
@@ -69,6 +75,7 @@ export const TimerApp = () => {
     endTimeMs: 0,
     wakeLock: null,
     soundEnabled: true,
+    activeHistoryId: null,
   };
 
   const requestWakeLock = async () => {
@@ -153,6 +160,7 @@ export const TimerApp = () => {
     remaining.textContent = formatTime(state.remainingSeconds);
     soundToggleButton.setAttribute('aria-pressed', String(state.soundEnabled));
     soundToggleButton.textContent = `音声: ${state.soundEnabled ? 'ON' : 'OFF'}`;
+    historyOpenButton.hidden = state.isRunning || state.flipTimerId !== null;
 
     if (state.isRunning) {
       setupPanel.hidden = true;
@@ -208,6 +216,10 @@ export const TimerApp = () => {
   };
 
   const resetToInitialState = () => {
+    if (state.isRunning) {
+      memoHistory.finish(state.activeHistoryId, 'incomplete');
+    }
+    state.activeHistoryId = null;
     stopTicker();
     releaseWakeLock();
     if (state.flipTimerId !== null) {
@@ -224,6 +236,8 @@ export const TimerApp = () => {
   };
 
   const finishCountdown = () => {
+    memoHistory.finish(state.activeHistoryId, 'completed');
+    state.activeHistoryId = null;
     stopTicker();
     releaseWakeLock();
     state.isRunning = false;
@@ -281,9 +295,12 @@ export const TimerApp = () => {
       state.isPaused = false;
       state.remainingSeconds = state.selectedMinutes * 60;
       state.totalSeconds = state.selectedMinutes * 60;
+      state.activeHistoryId = memoHistory.start(memoInput.value);
+      memoInput.value = '';
       startTicker();
       render();
     }, 600);
+    render();
   };
 
   const togglePause = () => {

@@ -63,6 +63,16 @@
           </div>
 
           <div class="timer-app__panel timer-app__panel--setup" data-role="setup-panel">
+            <label class="timer-app__label" for="timer-memo">一言メモ（任意・50文字以内）</label>
+            <input
+              class="timer-app__memo-input"
+              id="timer-memo"
+              type="text"
+              maxlength="50"
+              placeholder="例：資料作成"
+              autocomplete="off"
+            >
+
             <label class="timer-app__label" for="timer-minutes">時間設定（分）</label>
 
             <div class="timer-app__slider-wrap">
@@ -102,7 +112,22 @@
               </button>
             </div>
           </div>
+
+          <button class="timer-app__history-button" type="button" data-role="history-open">
+            過去のメモを見る
+          </button>
         </div>
+
+        <dialog class="timer-app__history-dialog" data-role="history-dialog" aria-labelledby="history-title">
+          <div class="timer-app__history-header">
+            <h2 class="timer-app__history-title" id="history-title">過去のメモ</h2>
+            <button class="timer-app__history-close" type="button" data-role="history-close" aria-label="閉じる">
+              ×
+            </button>
+          </div>
+          <p class="timer-app__history-empty" data-role="history-empty">保存されたメモはありません。</p>
+          <ul class="timer-app__history-list" data-role="history-list"></ul>
+        </dialog>
       </section>
     </main>
 
