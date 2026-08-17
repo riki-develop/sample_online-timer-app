@@ -1,0 +1,67 @@
+{
+  "$schema": "https://biomejs.dev/schemas/1.9.4/schema.json",
+  "vcs": {
+    "enabled": false,
+    "clientKind": "git",
+    "useIgnoreFile": false
+  },
+  "files": {
+    "include": [
+      "./**/*.tsx",
+      "./**/*.ts",
+      "./**/*.jsx",
+      "./**/*.js",
+      "./**/*.json",
+      "./**/*.css"
+    ],
+    "ignoreUnknown": false,
+    "ignore": [
+      "node_modules",
+      "build",
+      "public",
+      ".cache",
+      ".vscode*",
+      ".history"
+    ]
+  },
+  "formatter": {
+    "enabled": true,
+    "indentStyle": "space",
+    "indentWidth": 2,
+    "bracketSpacing": true,
+    "useEditorconfig": true,
+    "lineEnding": "lf"
+  },
+  "organizeImports": {
+    "enabled": true
+  },
+  "linter": {
+    "enabled": true,
+    "rules": {
+      "recommended": true,
+      "correctness": {
+        "noUnusedImports": "warn",
+        "noUnusedVariables": "warn"
+      }
+    }
+  },
+  "css": {
+    "formatter": {
+      "enabled": true,
+      "indentStyle": "space",
+      "indentWidth": 2,
+      "lineEnding": "lf",
+      "quoteStyle": "double"
+    }
+  },
+  "javascript": {
+    "formatter": {
+      "enabled": true,
+      "quoteStyle": "single",
+      "semicolons": "always",
+      "trailingCommas": "all",
+      "quoteProperties": "asNeeded",
+      "attributePosition": "multiline"
+    }
+  }
+}

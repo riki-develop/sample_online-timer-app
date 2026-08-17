@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OnlineTimer</title>
+    <link rel="stylesheet" href="<%= RESOLVE('@assets/scss/style.scss') %>">
+  </head>
+
+  <body>
+    <main id="root">
+      <section class="timer-app" aria-label="OnlineTimer">
+        <div class="timer-app__background" aria-hidden="true"></div>
+
+        <div class="timer-app__card">
+          <h1 class="timer-app__title">OnlineTimer</h1>
+
+          <p class="timer-app__message" data-role="message" role="status" aria-live="polite"></p>
+
+          <div class="timer-app__hourglass-wrap">
+            <svg
+              class="timer-app__hourglass"
+              data-role="hourglass-svg"
+              viewBox="0 0 120 200"
+              xmlns="http://www.w3.org/2000/svg"
+              aria-hidden="true"
+              focusable="false"
+            >
+              <!-- ガラス背景 -->
+              <polygon class="hg-glass-bg" points="10,14 110,14 66,100 54,100"/>
+              <polygon class="hg-glass-bg" points="54,100 66,100 110,186 10,186"/>
+
+              <!-- 上部の砂 -->
+              <polygon
+                class="hg-sand"
+                data-role="sand-upper"
+                points="10,14 110,14 66,100 54,100"
+              />
+
+              <!-- 下部の砂 -->
+              <polygon
+                class="hg-sand"
+                data-role="sand-lower"
+                points="10,186 110,186 110,186 10,186"
+              />
+
+              <!-- ガラスのフチ -->
+              <polygon class="hg-glass-outline" points="10,14 110,14 66,100 54,100"/>
+              <polygon class="hg-glass-outline" points="54,100 66,100 110,186 10,186"/>
+
+              <!-- フレーム（上下バー） -->
+              <rect class="hg-frame" x="2" y="0" width="116" height="14" rx="3"/>
+              <rect class="hg-frame" x="2" y="186" width="116" height="14" rx="3"/>
+
+              <!-- 落下する砂粒（CSS アニメで制御） -->
+              <g class="hg-particles" data-role="sand-particles">
+                <circle class="hg-particle" cx="60" cy="103" r="1.5"/>
+                <circle class="hg-particle" cx="60" cy="103" r="1.5"/>
+                <circle class="hg-particle" cx="60" cy="103" r="1.5"/>
+              </g>
+            </svg>
+          </div>
+
+          <div class="timer-app__panel timer-app__panel--setup" data-role="setup-panel">
+            <label class="timer-app__label" for="timer-minutes">時間設定（分）</label>
+
+            <div class="timer-app__slider-wrap">
+              <input
+                class="timer-app__slider"
+                id="timer-minutes"
+                type="range"
+                min="1"
+                max="60"
+                step="1"
+                value="10"
+                aria-describedby="timer-minutes-value"
+              >
+              <p class="timer-app__minutes" id="timer-minutes-value">10分</p>
+            </div>
+
+            <div class="timer-app__actions">
+              <button class="timer-app__button timer-app__button--ghost" type="button" data-role="sound-toggle" aria-pressed="true">
+                音声: ON
+              </button>
+              <button class="timer-app__button timer-app__button--primary" type="button" data-role="start">
+                スタート
+              </button>
+            </div>
+          </div>
+
+          <div class="timer-app__panel timer-app__panel--running" data-role="running-panel" hidden>
+            <p class="timer-app__remaining-label">残り時間</p>
+            <p class="timer-app__remaining" data-role="remaining">10:00</p>
+
+            <div class="timer-app__actions">
+              <button class="timer-app__button timer-app__button--secondary" type="button" data-role="pause">
+                一時停止
+              </button>
+              <button class="timer-app__button timer-app__button--danger" type="button" data-role="reset">
+                リセット
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <script type="module" src="<%= RESOLVE('@assets/js/app.js') %>"></script>
+  </body>
+</html>

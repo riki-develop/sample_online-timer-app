@@ -1,0 +1,29 @@
+@charset "utf-8";
+@use 'sass:math';
+@use 'sass:map';
+@use './_variables'  as *;
+
+/** media **/
+$breakpoints: (
+  sm: 419px,
+  md: 767px,
+  lg: 1023px,
+) !default;
+
+@mixin min($breakpoint) {
+  @media (width > #{map.get($breakpoints, $breakpoint)}) {
+    @content;
+  }
+}
+
+@mixin max($breakpoint) {
+  @media (width <= #{map.get($breakpoints, $breakpoint)}) {
+    @content;
+  }
+}
+
+@mixin min-max($min-breakpoint, $max-breakpoint) {
+  @media (width > #{map.get($breakpoints, $min-breakpoint)}) and (width <= #{map-get($breakpoints, $max-breakpoint)}) {
+    @content;
+  }
+}

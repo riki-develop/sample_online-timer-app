@@ -1,0 +1,26 @@
+{
+  "liveServer.settings.root": "/dist",
+  "liveServer.settings.port": 5500,
+  "editor.defaultFormatter": "biomejs.biome",
+  "editor.formatOnSave": true,
+  "editor.formatOnPaste": false,
+  "editor.codeActionsOnSave": {
+    "quickfix.biome": "always"
+  },
+  "[css]": {
+    "editor.defaultFormatter": "biomejs.biome"
+  },
+  "[javascript][typescript][typescriptreact]": {
+    "editor.defaultFormatter": "biomejs.biome"
+  },
+  "[typescript]": {
+    "editor.defaultFormatter": "biomejs.biome"
+  },
+  "[typescriptreact]": {
+    "editor.defaultFormatter": "biomejs.biome"
+  },
+  "[json][jsonc]": {
+    "editor.defaultFormatter": "biomejs.biome"
+  },
+  "biome.configurationPath": "biome.json"
+}

@@ -1,0 +1,7 @@
+ignoredBuiltDependencies:
+  - '@biomejs/biome'
+  - '@parcel/watcher'
+  - esbuild
+  - sharp
+
+minimumReleaseAge: 20160

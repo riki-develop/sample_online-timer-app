@@ -1,0 +1,62 @@
+@charset "utf-8";
+@use 'sass:math';
+@use 'sass:map';
+
+/******************
+ * Path
+ ******************/
+$root: "#root";
+
+// ▼使用例
+// background-image: url("#{$asset-path}/images/bg_pattern.png");
+$asset-path: "/assets";
+
+/******************
+ * Color
+ ******************/
+
+$main-color: #fffdee;
+
+/******************
+ * Width
+ ******************/
+
+$min-content-width: 320px;
+$max-content-width: 1440px;
+$pc-inner-max-width: 1024px;
+
+/******************
+ * Font
+ ******************/
+
+// ベースフォントサイズを定義（単位: px）。他のサイズ計算の基準となる。
+$base-font-size: 10;
+
+// ▫️pxをremに変換する関数
+// 引数: $num - px単位の数値
+// 0の場合は0remを返し、それ以外は基準フォントサイズで割ったrem値を返す。
+@function px($num) {
+  @if $num == 0 {
+    @return 0rem;
+  }
+
+  @return math.div($num, $base-font-size) * 1rem;
+}
+
+/******************
+ * VM
+ ******************/
+
+// ▫️スマートフォン用のvw単位を計算する関数
+// 引数: $px - デザイン上のpx値
+// 375px幅を基準にvw値を計算して返す。
+@function sp-vw($px) {
+  @return calc(#{$px} / 375 * 100vw);
+}
+
+// ▫️PC用のvw単位を計算する関数
+// 引数: $px - デザイン上のpx値
+// 最大1440px幅を基準にvw値を計算して返す。
+@function pc-vw($px) {
+  @return calc(#{$px} * min(100vw, 1440px) / 1440);
+}
