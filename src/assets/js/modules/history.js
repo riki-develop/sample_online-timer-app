@@ -1,6 +1,19 @@
 const STORAGE_KEY = 'online-timer:memo-history';
 const MAX_HISTORY_COUNT = 10;
 const MAX_MEMO_LENGTH = 50;
+const VALID_STATUSES = new Set(['running', 'completed', 'incomplete']);
+
+const isValidDateString = (value) =>
+  typeof value === 'string' && !Number.isNaN(new Date(value).getTime());
+
+const isValidHistoryEntry = (entry) =>
+  entry !== null &&
+  typeof entry === 'object' &&
+  typeof entry.id === 'string' &&
+  typeof entry.memo === 'string' &&
+  isValidDateString(entry.startedAt) &&
+  (entry.endedAt === null || isValidDateString(entry.endedAt)) &&
+  VALID_STATUSES.has(entry.status);
 
 const readHistory = () => {
   try {
@@ -8,7 +21,7 @@ const readHistory = () => {
     if (!storedValue) return [];
 
     const history = JSON.parse(storedValue);
-    return Array.isArray(history) ? history : [];
+    return Array.isArray(history) ? history.filter(isValidHistoryEntry) : [];
   } catch {
     return [];
   }
